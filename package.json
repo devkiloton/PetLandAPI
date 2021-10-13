@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "petlandapi",
   "version": "1.0.0",
   "description": "node.js rest",
@@ -15,6 +14,8 @@
   "author": "yarego brozerk (kiloton)",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "consign": "^0.1.6",
     "express": "^4.17.1"
   },
   "devDependencies": {

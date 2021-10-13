@@ -1,7 +1,5 @@
-import express from 'express';
+const customExpress = require('./config/customExpress');
 
-const app = express();
+const app = customExpress();
 
 app.listen(3000, ()=> console.log("Hello World"));
-
-app.get('/services', (req, res) => res.send('You are on the services route'));
