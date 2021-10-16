@@ -1,16 +1,14 @@
 const connection = require('../infrastructure/connection');
 const moment = require('moment');
 
-class Services
-{
-    add(attendance, res)
-    {
+class Services {
+    add(attendance, res) {
         const attendanceDate = moment().format('YYYY-MM-DD HH:mm:ss');
         const date = moment(attendance.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
-        const allDates = {...attendance, attendanceDate, date};
-        
+        const allDates = { ...attendance, attendanceDate, date };
+
         const dateIsValid = moment(date).isSameOrAfter(attendanceDate);
-        const clientIsValid = attendance.client.length >=3;
+        const clientIsValid = attendance.client.length >= 3;
 
         const validations = [
             {
@@ -29,25 +27,49 @@ class Services
         const errors = validations.filter(field => !field.status);
         const isThereErrors = errors.length;
 
-        if(isThereErrors)
-        {
+        if (isThereErrors) {
             res.status(400).json(errors);
         }
-        else
-        {
+        else {
             const sql = 'INSERT INTO Attendances SET ?';
 
-            connection.query(sql, allDates, (error, results)=>{
-                if(error)
-                {
+            connection.query(sql, allDates, (error, results) => {
+                if (error) {
                     res.status(400).json(error);
                 }
-                else
-                {
+                else {
                     res.status(201).json(results);
                 }
             })
         }
+    }
+
+    list(res) {
+        const sql = 'SELECT * FROM petland_schedule.attendances';
+        connection.query(sql, (error, results) => {
+            if (error) {
+                res.status(400).json(error);
+            }
+            else {
+                res.status(400).json(results);
+            }
+        })
+    }
+
+    searchId(id, res) {
+        const sql = `SELECT * FROM petland_schedule.attendances WHERE id=${id}`;
+
+        connection.query(sql, (error, results) => {
+            const clientId = results[0];
+            if (error) 
+            {
+                res.status(400).json(error);
+            }
+            else 
+            {
+                res.status(200).json(clientId);
+            }
+        })
     }
 }
 
