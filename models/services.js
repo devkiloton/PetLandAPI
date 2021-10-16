@@ -1,10 +1,9 @@
-const services = require('../controllers/services');
 const connection = require('../infrastructure/connection');
 const moment = require('moment');
 
 class Services
 {
-    add(attendance)
+    add(attendance, res)
     {
         const attendanceDate = moment().format('YYYY-MM-DD HH:mm:ss');
         const date = moment(attendance.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
@@ -15,11 +14,11 @@ class Services
         connection.query(sql, allDates, (error, results)=>{
             if(error)
             {
-                console.log(error);
+                res.status(400).json(error);
             }
             else
             {
-                console.log(results);
+                res.status(201).json(results);
             }
         })
     }

@@ -5,7 +5,6 @@ module.exports = app => {
     app.post('/services', (req, res) => {
         const services = req.body;
 
-        Services.add(services)
-        res.send('You are on the services route POST');
+        Services.add(services, res);
     })
 }
