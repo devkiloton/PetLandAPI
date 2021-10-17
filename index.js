@@ -12,7 +12,7 @@ connection.connect(error => {
 
         const app = customExpress();
 
-        app.listen(3000, ()=> console.log("Hello World"));
+        app.listen(3000, ()=> console.log("using localhost:3000"));
         
         console.log('connected');
     }

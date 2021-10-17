@@ -2,10 +2,10 @@ class Tables {
     init(connection){
         this.connection = connection;
 
-        this.createattendance();
+        this.createAttendance();
     }
 
-    createattendance(){
+    createAttendance(){
         const sql = 'CREATE TABLE IF NOT EXISTS Attendances (id int NOT NULL AUTO_INCREMENT, client varchar(50) NOT NULL, pet varchar(20), service varchar(20) NOT NULL, date datetime NOT NULL, attendanceDate datetime NOT NULL, status varchar(20) NOT NULL, obs text, PRIMARY KEY(id))'
         
         this.connection.query(sql, (error) => {
@@ -14,7 +14,7 @@ class Tables {
             }
             else
             {
-                console.log('Table has been created')
+                console.log('Table "Attendances" has been created')
             }
         })
     }

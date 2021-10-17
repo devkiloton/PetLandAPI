@@ -38,7 +38,7 @@ class Services {
                     res.status(400).json(error);
                 }
                 else {
-                    res.status(201).json(results);
+                    res.status(201).json(attendance);
                 }
             })
         }
@@ -68,6 +68,41 @@ class Services {
             else 
             {
                 res.status(200).json(clientId);
+            }
+        })
+    }
+
+    alter(id, values, res){
+
+        if(values.date){
+            values.date = moment(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
+        }
+
+        const sql = 'UPDATE petland_schedule.attendances SET ? WHERE id=?';
+        
+        connection.query(sql, [values, id], (error, results) =>{
+            if (error) 
+            {
+                res.status(400).json(error);
+            }
+            else 
+            {
+                res.status(200).json({...values, id});
+            }
+        })
+    }
+
+    delete(id, res){
+        const sql = 'DELETE FROM petland_schedule.attendances WHERE id=?';
+        
+        connection.query(sql, id, (error, results) => {
+            if (error) 
+            {
+                res.status(400).json(error);
+            }
+            else 
+            {
+                res.status(200).json({id});
             }
         })
     }
